@@ -37,26 +37,6 @@ class WebsiteChecker {
             this.showTempMessage('Historial borrado');
         }
     }
-
-    saveToHistory(result) {
-    // Asegurarnos de que estamos trabajando con el array actual
-    this.history.unshift({
-        url: result.url,
-        status: result.status,
-        responseTime: result.responseTime,
-        timestamp: result.timestamp
-    });
-
-        // Mantener solo los últimos 10 elementos
-        this.history = this.history.slice(0, 10);
-    
-        // Guardar en localStorage
-        localStorage.setItem('websiteCheckerHistory', JSON.stringify(this.history));
-    
-        // Actualizar la UI inmediatamente
-        this.renderHistory();
-    }
-
     showTempMessage(message) {
         const tempMsg = document.createElement('div');
         tempMsg.textContent = message;
@@ -196,16 +176,19 @@ class WebsiteChecker {
 
     // Historial en LocalStorage
     saveToHistory(result) {
-        this.history.unshift({
-            url: result.url,
-            status: result.status,
-            responseTime: result.responseTime,
-            timestamp: result.timestamp
-        });
-
+    // Asegurarnos de que estamos trabajando con el array actual
+    this.history.unshift({
+        url: result.url,
+        status: result.status,
+        responseTime: result.responseTime,
+        timestamp: result.timestamp
+    });
         // Mantener solo los últimos 10 elementos
         this.history = this.history.slice(0, 10);
+        // Guardar en localStorage
         localStorage.setItem('websiteCheckerHistory', JSON.stringify(this.history));
+        // Actualizar la UI inmediatamente
+        this.renderHistory();
     }
 
     loadHistory() {
