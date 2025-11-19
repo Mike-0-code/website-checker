@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¿Está Caído? - Checker de Websites</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>¿Está Caído?</h1>
+            <p>Verifica si un sitio web está online desde tu navegador</p>
+        </header>
+
+        <main>
+            <div class="checker-form">
+                <div class="input-group">
+                    <input 
+                        type="text" 
+                        id="urlInput" 
+                        placeholder="https://ejemplo.com" 
+                        autocomplete="off"
+                    >
+                    <button id="checkButton">Verificar</button>
+                </div>
+                <small class="hint">Ingresa una URL completa con https://</small>
+            </div>
+
+            <div id="result" class="result hidden">
+                <!-- Aquí se mostrarán los resultados -->
+            </div>
+
+            <div id="history" class="history">
+                <h3>Tus verificaciones recientes</h3>
+                <div id="historyList" class="history-list">
+                    <!-- Historial se cargará aquí -->
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Verificación 100% client-side · Tus datos no se envían a servidores</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
