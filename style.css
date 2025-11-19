@@ -85,7 +85,6 @@ header p {
     font-size: 0.9em;
 }
 
-/* Resultados */
 .result {
     padding: 20px;
     border-radius: 8px;
@@ -131,19 +130,19 @@ header p {
     display: inline-block;
 }
 
-/* Historial */
 .history {
     margin-top: 40px;
 }
 
-.history h3 {
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 15px;
-    color: #333;
 }
 
 .history-item {
     display: flex;
-    justify-content: between;
     align-items: center;
     padding: 12px 15px;
     border: 1px solid #eee;
@@ -179,6 +178,33 @@ header p {
     font-size: 0.9em;
 }
 
+.clear-btn {
+    padding: 10px 20px;
+    background: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.clear-btn:hover {
+    background: #5a6268;
+}
+
+.clear-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.no-history {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    padding: 20px;
+}
+
 .hidden {
     display: none;
 }
@@ -189,7 +215,7 @@ footer {
     color: #666;
     font-size: 0.9em;
 }
-/* Modal de confirmación */
+
 .modal {
     position: fixed;
     top: 0;
@@ -257,19 +283,15 @@ footer {
     border-top: 1px solid #eee;
 }
 
-.btn-cancel, .btn-delete {
+.btn-cancel {
     padding: 10px 20px;
-    border: none;
+    background: #f8f9fa;
+    color: #333;
+    border: 1px solid #ddd;
     border-radius: 6px;
     cursor: pointer;
     font-size: 14px;
     transition: all 0.2s;
-}
-
-.btn-cancel {
-    background: #f8f9fa;
-    color: #333;
-    border: 1px solid #ddd;
 }
 
 .btn-cancel:hover {
@@ -277,49 +299,20 @@ footer {
 }
 
 .btn-delete {
+    padding: 10px 20px;
     background: #dc3545;
     color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
 }
 
 .btn-delete:hover {
     background: #c82333;
 }
-/* Header del historial */
-.history-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-}
 
-.clear-btn {
-    padding: 10px 20px;
-    background: #6c757d;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.clear-btn:hover {
-    background: #5a6268;
-}
-
-.clear-btn:disabled {
-    background: #ccc;
-    cursor: not-allowed;
-    transform: none;
-}
-
-.no-history {
-    text-align: center;
-    color: #666;
-    font-style: italic;
-    padding: 20px;
-}
-/* Responsive */
 @media (max-width: 600px) {
     .container {
         padding: 20px;
