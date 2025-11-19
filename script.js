@@ -99,6 +99,9 @@ confirmClearHistory() {
             this.showResult(result);
             this.saveToHistory(result);
             this.renderHistory();
+
+            this.urlInput.value = '';
+            
         } catch (error) {
             this.showError('Error al verificar el sitio: ' + error.message);
         } finally {
