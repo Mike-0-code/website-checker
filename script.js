@@ -5,38 +5,37 @@ class WebsiteChecker {
     }
 
     init() {
-        this.urlInput = document.getElementById('urlInput');
-        this.checkButton = document.getElementById('checkButton');
-        this.resultDiv = document.getElementById('result');
-        this.historyList = document.getElementById('historyList');
-        this.clearButton = document.getElementById('clearHistory');
-
-        this.checkButton.addEventListener('click', () => this.checkWebsite());
-        this.urlInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') this.checkWebsite();
-        });
-
-        // Nuevo: Event listener para borrar historial
-        this.clearButton.addEventListener('click', () => this.clearHistory());
-        this.renderHistory();
-        }
-
-    clearHistory() {
-        if (this.history.length === 0) return;
+    this.urlInput = document.getElementById('urlInput');
+    this.checkButton = document.getElementById('checkButton');
+    this.resultDiv = document.getElementById('result');
+    this.historyList = document.getElementById('historyList');
+    this.clearButton = document.getElementById('clearHistory');
     
-        if (confirm('¿Estás seguro de que quieres borrar todo el historial?')) {
-            // 1. Limpiar el array en memoria
-            this.history = [];
-        
-            // 2. Limpiar el localStorage
-            localStorage.removeItem('websiteCheckerHistory');
-        
-            // 3. Forzar una actualización inmediata de la UI
-            this.renderHistory();
-        
-            // 4. Feedback visual opcional (puedes quitar esto si prefieres)
-            this.showTempMessage('Historial borrado');
+    // NUEVO: Elementos del modal
+    this.confirmModal = document.getElementById('confirmModal');
+    this.confirmCancel = document.getElementById('confirmCancel');
+    this.confirmDelete = document.getElementById('confirmDelete');
+
+    this.checkButton.addEventListener('click', () => this.checkWebsite());
+    this.urlInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') this.checkWebsite();
+    });
+
+    // CAMBIADO: Ahora muestra el modal en lugar de borrar directamente
+    this.clearButton.addEventListener('click', () => this.showConfirmModal());
+    
+    // NUEVO: Event listeners para el modal
+    this.confirmCancel.addEventListener('click', () => this.hideConfirmModal());
+    this.confirmDelete.addEventListener('click', () => this.confirmClearHistory());
+    
+    // NUEVO: Cerrar modal haciendo clic fuera
+    this.confirmModal.addEventListener('click', (e) => {
+        if (e.target === this.confirmModal) {
+            this.hideConfirmModal();
         }
+    });
+
+    this.renderHistory();
     }
     showTempMessage(message) {
         const tempMsg = document.createElement('div');
@@ -58,6 +57,32 @@ class WebsiteChecker {
             document.body.removeChild(tempMsg);
         }, 2000);
     }
+
+    showConfirmModal() {
+    if (this.history.length === 0) return;
+    this.confirmModal.classList.remove('hidden');
+}
+
+hideConfirmModal() {
+    this.confirmModal.classList.add('hidden');
+}
+
+confirmClearHistory() {
+    // 1. Limpiar el array en memoria
+    this.history = [];
+    
+    // 2. Limpiar el localStorage
+    localStorage.removeItem('websiteCheckerHistory');
+    
+    // 3. Cerrar el modal
+    this.hideConfirmModal();
+    
+    // 4. Actualizar la UI
+    this.renderHistory();
+    
+    // 5. Feedback visual
+    this.showTempMessage('Historial borrado');
+}
 
     async checkWebsite() {
         const url = this.prepareUrl(this.urlInput.value.trim());
