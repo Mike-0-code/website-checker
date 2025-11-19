@@ -5,38 +5,31 @@ class WebsiteChecker {
     }
 
     init() {
-    this.urlInput = document.getElementById('urlInput');
-    this.checkButton = document.getElementById('checkButton');
-    this.resultDiv = document.getElementById('result');
-    this.historyList = document.getElementById('historyList');
-    this.clearButton = document.getElementById('clearHistory');
-    
-    // NUEVO: Elementos del modal
-    this.confirmModal = document.getElementById('confirmModal');
-    this.confirmCancel = document.getElementById('confirmCancel');
-    this.confirmDelete = document.getElementById('confirmDelete');
+        this.urlInput = document.getElementById('urlInput');
+        this.checkButton = document.getElementById('checkButton');
+        this.resultDiv = document.getElementById('result');
+        this.historyList = document.getElementById('historyList');
+        this.clearButton = document.getElementById('clearHistory');
+        this.confirmModal = document.getElementById('confirmModal');
+        this.confirmCancel = document.getElementById('confirmCancel');
+        this.confirmDelete = document.getElementById('confirmDelete');
 
-    this.checkButton.addEventListener('click', () => this.checkWebsite());
-    this.urlInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') this.checkWebsite();
-    });
+        this.checkButton.addEventListener('click', () => this.checkWebsite());
+        this.urlInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') this.checkWebsite();
+        });
 
-    // CAMBIADO: Ahora muestra el modal en lugar de borrar directamente
-    this.clearButton.addEventListener('click', () => this.showConfirmModal());
-    
-    // NUEVO: Event listeners para el modal
-    this.confirmCancel.addEventListener('click', () => this.hideConfirmModal());
-    this.confirmDelete.addEventListener('click', () => this.confirmClearHistory());
-    
-    // NUEVO: Cerrar modal haciendo clic fuera
-    this.confirmModal.addEventListener('click', (e) => {
-        if (e.target === this.confirmModal) {
-            this.hideConfirmModal();
-        }
-    });
+        this.clearButton.addEventListener('click', () => this.showConfirmModal());
+        this.confirmCancel.addEventListener('click', () => this.hideConfirmModal());
+        this.confirmDelete.addEventListener('click', () => this.confirmClearHistory());
+        
+        this.confirmModal.addEventListener('click', (e) => {
+            if (e.target === this.confirmModal) this.hideConfirmModal();
+        });
 
-    this.renderHistory();
+        this.renderHistory();
     }
+
     showTempMessage(message) {
         const tempMsg = document.createElement('div');
         tempMsg.textContent = message;
@@ -52,37 +45,25 @@ class WebsiteChecker {
         `;
         
         document.body.appendChild(tempMsg);
-        
-        setTimeout(() => {
-            document.body.removeChild(tempMsg);
-        }, 2000);
+        setTimeout(() => document.body.removeChild(tempMsg), 2000);
     }
 
     showConfirmModal() {
-    if (this.history.length === 0) return;
-    this.confirmModal.classList.remove('hidden');
-}
+        if (this.history.length === 0) return;
+        this.confirmModal.classList.remove('hidden');
+    }
 
-hideConfirmModal() {
-    this.confirmModal.classList.add('hidden');
-}
+    hideConfirmModal() {
+        this.confirmModal.classList.add('hidden');
+    }
 
-confirmClearHistory() {
-    // 1. Limpiar el array en memoria
-    this.history = [];
-    
-    // 2. Limpiar el localStorage
-    localStorage.removeItem('websiteCheckerHistory');
-    
-    // 3. Cerrar el modal
-    this.hideConfirmModal();
-    
-    // 4. Actualizar la UI
-    this.renderHistory();
-    
-    // 5. Feedback visual
-    this.showTempMessage('Historial borrado');
-}
+    confirmClearHistory() {
+        this.history = [];
+        localStorage.removeItem('websiteCheckerHistory');
+        this.hideConfirmModal();
+        this.renderHistory();
+        this.showTempMessage('Historial borrado');
+    }
 
     async checkWebsite() {
         const url = this.prepareUrl(this.urlInput.value.trim());
@@ -99,9 +80,7 @@ confirmClearHistory() {
             this.showResult(result);
             this.saveToHistory(result);
             this.renderHistory();
-
             this.urlInput.value = '';
-            
         } catch (error) {
             this.showError('Error al verificar el sitio: ' + error.message);
         } finally {
@@ -110,7 +89,6 @@ confirmClearHistory() {
     }
 
     prepareUrl(inputUrl) {
-        // Asegurar que la URL tenga protocolo
         if (!inputUrl.startsWith('http://') && !inputUrl.startsWith('https://')) {
             return 'https://' + inputUrl;
         }
@@ -130,11 +108,10 @@ confirmClearHistory() {
         const startTime = performance.now();
         
         try {
-            // Usamos HEAD request para ser más rápidos y usar menos ancho de banda
             const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 seg timeout
+            const timeoutId = setTimeout(() => controller.abort(), 10000);
             
-            const response = await fetch(url, {
+            await fetch(url, {
                 method: 'HEAD',
                 mode: 'no-cors',
                 cache: 'no-cache',
@@ -158,7 +135,7 @@ confirmClearHistory() {
                 url: url,
                 status: 'offline',
                 error: error.message,
-                responseTime: responseTime < 10000 ? Math.round(responseTime) : null, // Si fue timeout, no mostrar tiempo
+                responseTime: responseTime < 10000 ? Math.round(responseTime) : null,
                 timestamp: new Date().toISOString()
             };
         }
@@ -203,20 +180,16 @@ confirmClearHistory() {
         this.checkButton.textContent = loading ? 'Verificando...' : 'Verificar';
     }
 
-    // Historial en LocalStorage
     saveToHistory(result) {
-    // Asegurarnos de que estamos trabajando con el array actual
-    this.history.unshift({
-        url: result.url,
-        status: result.status,
-        responseTime: result.responseTime,
-        timestamp: result.timestamp
-    });
-        // Mantener solo los últimos 10 elementos
+        this.history.unshift({
+            url: result.url,
+            status: result.status,
+            responseTime: result.responseTime,
+            timestamp: result.timestamp
+        });
+
         this.history = this.history.slice(0, 10);
-        // Guardar en localStorage
         localStorage.setItem('websiteCheckerHistory', JSON.stringify(this.history));
-        // Actualizar la UI inmediatamente
         this.renderHistory();
     }
 
@@ -260,7 +233,6 @@ confirmClearHistory() {
     }
 }
 
-// Inicializar la aplicación cuando se carga la página
 document.addEventListener('DOMContentLoaded', () => {
     new WebsiteChecker();
 });
