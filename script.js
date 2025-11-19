@@ -15,7 +15,44 @@ class WebsiteChecker {
             if (e.key === 'Enter') this.checkWebsite();
         });
 
+        // Nuevo: Event listener para borrar historial
+        this.clearButton.addEventListener('click', () => this.clearHistory());
         this.renderHistory();
+        }
+
+    // Nuevo método para borrar historial
+    clearHistory() {
+        if (this.history.length === 0) return;
+        
+        if (confirm('¿Estás seguro de que quieres borrar todo el historial?')) {
+            this.history = [];
+            localStorage.removeItem('websiteCheckerHistory');
+            this.renderHistory();
+            
+            // Feedback visual opcional
+            this.showTempMessage('Historial borrado');
+        }
+    }
+
+    showTempMessage(message) {
+        const tempMsg = document.createElement('div');
+        tempMsg.textContent = message;
+        tempMsg.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #333;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            z-index: 1000;
+        `;
+        
+        document.body.appendChild(tempMsg);
+        
+        setTimeout(() => {
+            document.body.removeChild(tempMsg);
+        }, 2000);
     }
 
     async checkWebsite() {
