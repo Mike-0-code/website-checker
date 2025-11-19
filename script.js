@@ -20,18 +20,41 @@ class WebsiteChecker {
         this.renderHistory();
         }
 
-    // Nuevo método para borrar historial
     clearHistory() {
         if (this.history.length === 0) return;
-        
+    
         if (confirm('¿Estás seguro de que quieres borrar todo el historial?')) {
+            // 1. Limpiar el array en memoria
             this.history = [];
+        
+            // 2. Limpiar el localStorage
             localStorage.removeItem('websiteCheckerHistory');
+        
+            // 3. Forzar una actualización inmediata de la UI
             this.renderHistory();
-            
-            // Feedback visual opcional
+        
+            // 4. Feedback visual opcional (puedes quitar esto si prefieres)
             this.showTempMessage('Historial borrado');
         }
+    }
+
+    saveToHistory(result) {
+    // Asegurarnos de que estamos trabajando con el array actual
+    this.history.unshift({
+        url: result.url,
+        status: result.status,
+        responseTime: result.responseTime,
+        timestamp: result.timestamp
+    });
+
+        // Mantener solo los últimos 10 elementos
+        this.history = this.history.slice(0, 10);
+    
+        // Guardar en localStorage
+        localStorage.setItem('websiteCheckerHistory', JSON.stringify(this.history));
+    
+        // Actualizar la UI inmediatamente
+        this.renderHistory();
     }
 
     showTempMessage(message) {
