@@ -305,11 +305,6 @@ footer {
 
 .clear-btn:hover {
     background: #5a6268;
-    transform: translateY(-1px);
-}
-
-.clear-btn:active {
-    transform: translateY(0);
 }
 
 .clear-btn:disabled {
