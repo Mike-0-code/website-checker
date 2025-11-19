@@ -9,6 +9,7 @@ class WebsiteChecker {
         this.checkButton = document.getElementById('checkButton');
         this.resultDiv = document.getElementById('result');
         this.historyList = document.getElementById('historyList');
+        this.clearButton = document.getElementById('clearHistory');
 
         this.checkButton.addEventListener('click', () => this.checkWebsite());
         this.urlInput.addEventListener('keypress', (e) => {
