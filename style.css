@@ -189,7 +189,34 @@ footer {
     color: #666;
     font-size: 0.9em;
 }
+/* Header del historial */
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
 
+.clear-btn {
+    background: none;
+    border: none;
+    font-size: 1.2em;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+}
+
+.clear-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.no-history {
+    text-align: center;
+    color: #666;
+    font-style: italic;
+    padding: 20px;
+}
 /* Responsive */
 @media (max-width: 600px) {
     .container {
