@@ -293,17 +293,29 @@ footer {
 }
 
 .clear-btn {
-    background: none;
+    padding: 8px 16px;
+    background: #dc3545;
+    color: white;
     border: none;
-    font-size: 1.2em;
+    border-radius: 6px;
+    font-size: 14px;
     cursor: pointer;
-    padding: 5px;
-    border-radius: 50%;
-    transition: background-color 0.3s;
+    transition: all 0.3s;
 }
 
 .clear-btn:hover {
-    background-color: #f0f0f0;
+    background: #c82333;
+    transform: translateY(-1px);
+}
+
+.clear-btn:active {
+    transform: translateY(0);
+}
+
+.clear-btn:disabled {
+    background: #6c757d;
+    cursor: not-allowed;
+    transform: none;
 }
 
 .no-history {
