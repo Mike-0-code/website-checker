@@ -48,5 +48,20 @@
     </div>
 
     <script src="script.js"></script>
+    <!-- Modal de confirmación personalizado -->
+    <div id="confirmModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>¿Borrar historial?</h3>
+            </div>
+            <div class="modal-body">
+                <p>Se eliminarán todas las verificaciones recientes. Esta acción no se puede deshacer.</p>
+            </div>
+            <div class="modal-actions">
+                <button id="confirmCancel" class="btn-cancel">Cancelar</button>
+                <button id="confirmDelete" class="btn-delete">Borrar todo</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
