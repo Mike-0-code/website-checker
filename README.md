@@ -15,6 +15,10 @@ Verifica si un sitio web está online directamente desde tu navegador.
 2. Haz clic en "Verificar"
 3. Ve el resultado: Online u Offline
 
+## Demo
+
+https://mike-0-code.github.io/website-checker/
+
 ## Tecnologías
 
 HTML, CSS y JavaScript vanilla.
@@ -22,7 +26,3 @@ HTML, CSS y JavaScript vanilla.
 ## Instalación
 
 Abre index.html en tu navegador.
-
-## Demo
-
-https://mike-0-code.github.io/website-checker/
