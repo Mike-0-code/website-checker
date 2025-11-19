@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>¿Está Caído? - Checker de Websites</title>
+    <meta name="description" content="Verifica si un sitio web está online desde tu navegador de forma completamente privada">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,49 +13,41 @@
             <h1>¿Está Caído?</h1>
             <p>Verifica si un sitio web está online desde tu navegador</p>
         </header>
-
         <main>
-            <div class="checker-form">
+            <section class="checker-form" aria-labelledby="checker-heading">
                 <div class="input-group">
                     <input 
-                        type="text" 
+                        type="url"
                         id="urlInput" 
                         placeholder="https://ejemplo.com" 
                         autocomplete="off"
+                        aria-label="URL del sitio a verificar"
                     >
                     <button id="checkButton">Verificar</button>
                 </div>
                 <small class="hint">Ingresa una URL completa con https://</small>
-            </div>
-
-            <div id="result" class="result hidden">
-                <!-- Aquí se mostrarán los resultados -->
-            </div>
-
-            <div id="history" class="history">
+            </section>
+            <section id="result" class="result hidden" aria-live="polite"> 
+            </section>
+            <section class="history" aria-labelledby="history-heading">
                 <div class="history-header">
-                    <h3>Tus verificaciones recientes</h3>
+                    <h3 id="history-heading">Tus verificaciones recientes</h3> <!-- ID para aria-labelledby -->
                     <button id="clearHistory" class="clear-btn" title="Borrar historial">
                         Borrar historial
                     </button>
                 </div>
-                <div id="historyList" class="history-list">
-                   <!-- Historial se cargará aquí -->
+                <div id="historyList" class="history-list" aria-live="polite">
                 </div>
-            </div>
+            </section>
         </main>
-
         <footer>
             <p>Completamente privado · Todo se procesa en tu dispositivo</p>
         </footer>
     </div>
-
-    <script src="script.js"></script>
-    <!-- Modal de confirmación personalizado -->
-    <div id="confirmModal" class="modal hidden">
+    <div id="confirmModal" class="modal hidden" role="dialog" aria-labelledby="modal-title" aria-modal="true">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>¿Borrar historial?</h3>
+                <h3 id="modal-title">¿Borrar historial?</h3> <!-- ID para aria-labelledby -->
             </div>
             <div class="modal-body">
                 <p>Se eliminarán todas las verificaciones recientes. Esta acción no se puede deshacer.</p>
@@ -65,5 +58,6 @@
             </div>
         </div>
     </div>
+    <script src="script.js"></script>
 </body>
 </html>
